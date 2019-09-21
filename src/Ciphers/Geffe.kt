@@ -27,7 +27,8 @@ open class Geffe: StreamEncipher {
                 updateRegister(decodeBits3)
             }
             cipherBits[i] = cipherBits[i] xor
-                    (if (decodeBits1[i] == 0.toByte()) decodeBits2[i] else decodeBits3[i])
+                    (if (decodeBits3[i  % registerSize] == 0.toByte())
+                        decodeBits1[i  % registerSize] else decodeBits2[i  % registerSize])
         }
         return parseBitArrayToByteArray(cipherBits)
     }
@@ -41,7 +42,8 @@ open class Geffe: StreamEncipher {
                 updateRegister(encodeBits3)
             }
             plainBits[i] = plainBits[i] xor
-                    (if (encodeBits1[i] == 0.toByte()) encodeBits2[i] else encodeBits3[i])
+                    (if (encodeBits3[i % registerSize] == 0.toByte())
+                        encodeBits1[i  % registerSize] else encodeBits2[i % registerSize])
         }
         return parseBitArrayToByteArray(plainBits)
     }
@@ -49,7 +51,7 @@ open class Geffe: StreamEncipher {
     fun getExample(): String{
         val exampleRegister = ByteArray(registerSize)
         for (i in exampleRegister.indices){
-            exampleRegister[i] = if (encodeBits1[i] == 0.toByte()) encodeBits2[i] else encodeBits3[i]
+            exampleRegister[i] = if (encodeBits3[i] == 0.toByte()) encodeBits1[i] else encodeBits2[i]
         }
         return parseBitArrayToString(exampleRegister)
     }

@@ -48,7 +48,6 @@ fun parseByteToBitString(byte: Byte): String {
     for (i in bits.indices) {
         builder.append(bits[i].toString())
     }
-    builder.reverse()
     return builder.toString()
 }
 

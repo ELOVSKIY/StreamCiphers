@@ -71,11 +71,15 @@ public class Controller {
     @FXML
     void onDecipherClick() {
         if (testFile() && setCipher()) {
-
+            readFile();
+            plainArea.setText(UtilsKt.parseByteArrayToBitString(fileBytes));
+            fileBytes = cipher.decode(fileBytes);
+            cipherArea.setText(UtilsKt.parseByteArrayToBitString(fileBytes));
+            writeFile();
         }
     }
 
-    boolean testFile() {
+    private boolean testFile() {
         if (filePath == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setHeaderText("Chose file for correct work.");
@@ -85,7 +89,7 @@ public class Controller {
         return true;
     }
 
-    boolean setCipher() {
+    private boolean setCipher() {
         if (cipherType.getValue() != null) {
             if (cipherType.getValue().equals("LFSR")) {
                 if (checkField(field1)) {
@@ -96,6 +100,7 @@ public class Controller {
             if (cipherType.getValue().equals("Geffe")) {
                 if (checkField(field1) && checkField(field2) && checkField(field3)) {
                     cipher = new Geffe(field1.getText(), field2.getText(), field3.getText());
+                    field4.setText(((Geffe)cipher).getExample());
                     return true;
                 }
             }
