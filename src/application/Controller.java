@@ -100,13 +100,21 @@ public class Controller {
             if (cipherType.getValue().equals("Geffe")) {
                 if (checkField(field1) && checkField(field2) && checkField(field3)) {
                     cipher = new Geffe(field1.getText(), field2.getText(), field3.getText());
-                    field4.setText(((Geffe)cipher).getExample());
+                    field4.setText(((Geffe) cipher).getExample());
                     return true;
                 }
             }
             if (cipherType.getValue().equals("RC4")) {
-                cipher = new RC4();
-                return true;
+                byte[] bytes = getBytesFromKey();
+                if (bytes != null) {
+                    cipher = new RC4(bytes);
+                    return true;
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setHeaderText("Incorrect key.");
+                    alert.showAndWait();
+                    return false;
+                }
             }
         }
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -147,4 +155,17 @@ public class Controller {
         }
     }
 
+    private byte[] getBytesFromKey() {
+        String key = field1.getText();
+        String[] strBytes = key.split(" ");
+        byte[] bts = new byte[strBytes.length];
+        try {
+            for (int i = 0; i < bts.length; i++) {
+                bts[i] = Byte.parseByte(strBytes[i]);
+            }
+            return bts;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
