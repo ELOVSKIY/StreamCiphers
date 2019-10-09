@@ -11,10 +11,11 @@ import Ciphers.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static Ciphers.UtilsKt.parseByteArrayToBitString;
 
 
 public class Controller {
@@ -29,23 +30,22 @@ public class Controller {
     TextArea cipherArea;
 
     @FXML
+    TextArea keyArea;
+
+    @FXML
     Text filePathText;
 
     @FXML
     ComboBox<String> cipherType;
 
     @FXML
-    TextField field1;
+    TextField key1;
 
     @FXML
-    TextField field2;
-
-
-    @FXML
-    TextField field3;
+    TextField key2;
 
     @FXML
-    TextField field4;
+    TextField key3;
 
     @FXML
     void choseFile() {
@@ -61,9 +61,10 @@ public class Controller {
     void onEncipherClick() {
         if (testFile() && setCipher()) {
             readFile();
-            plainArea.setText(UtilsKt.parseByteArrayToBitString(fileBytes));
-            fileBytes = cipher.encode(fileBytes);
-            cipherArea.setText(UtilsKt.parseByteArrayToBitString(fileBytes));
+            plainArea.setText(parseByteArrayToBitString(fileBytes));
+            fileBytes = cipher.code(fileBytes);
+            cipherArea.setText(parseByteArrayToBitString(fileBytes));
+            keyArea.setText(parseByteArrayToBitString(cipher.getKeyBits()));
             writeFile();
         }
     }
@@ -72,9 +73,10 @@ public class Controller {
     void onDecipherClick() {
         if (testFile() && setCipher()) {
             readFile();
-            plainArea.setText(UtilsKt.parseByteArrayToBitString(fileBytes));
-            fileBytes = cipher.decode(fileBytes);
-            cipherArea.setText(UtilsKt.parseByteArrayToBitString(fileBytes));
+            plainArea.setText(parseByteArrayToBitString(fileBytes));
+            fileBytes = cipher.code(fileBytes);
+            cipherArea.setText(parseByteArrayToBitString(fileBytes));
+            keyArea.setText(parseByteArrayToBitString(cipher.getKeyBits()));
             writeFile();
         }
     }
@@ -92,15 +94,14 @@ public class Controller {
     private boolean setCipher() {
         if (cipherType.getValue() != null) {
             if (cipherType.getValue().equals("LFSR")) {
-                if (checkField(field1, 29)) {
-                    cipher = new LSFR(field1.getText());
+                if (checkField(key1, 29)) {
+                    cipher = new LSFR(key1.getText());
                     return true;
                 }
             }
             if (cipherType.getValue().equals("Geffe")) {
-                if (checkField(field1, 29) && checkField(field2, 23) && checkField(field3, 28)) {
-                    cipher = new Geffe(field1.getText(), field2.getText(), field3.getText());
-                    field4.setText(((Geffe) cipher).getExample());
+                if (checkField(key1, 29) && checkField(key2, 23) && checkField(key3, 28)) {
+                    cipher = new Geffe(key1.getText(), key2.getText(), key3.getText());
                     return true;
                 }
             }
@@ -156,7 +157,7 @@ public class Controller {
     }
 
     private byte[] getBytesFromKey() {
-        String key = field1.getText();
+        String key = key1.getText();
         String[] strBytes = key.split(" ");
         byte[] bts = new byte[strBytes.length];
         try {

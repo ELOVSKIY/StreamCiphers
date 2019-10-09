@@ -10,7 +10,7 @@ const val registerSize = 29
 fun parseByteArrayToBitString(byteArray: ByteArray): String {
     val builder = StringBuilder()
     for (i in byteArray.indices) {
-        if ((i % 5 == 0) and (i != 0))
+        if ((i % 2 == 0) and (i != 0))
             builder.append('\n')
         builder.append(parseByteToBitString(byteArray[i]))
         builder.append(" ")

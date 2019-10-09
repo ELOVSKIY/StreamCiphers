@@ -7,7 +7,7 @@ open class RC4(val U: ByteArray) : StreamEncipher {
     private var S = ByteArray(byteSize)
 
 
-    override fun encode(plainBytes: ByteArray): ByteArray {
+    override fun code(plainBytes: ByteArray): ByteArray {
         var i = 0
         var j = 0
         for (byteInd in plainBytes.indices){
@@ -22,19 +22,9 @@ open class RC4(val U: ByteArray) : StreamEncipher {
         return plainBytes;
     }
 
-    override fun decode(cipherBytes: ByteArray): ByteArray {
-        var i = 0
-        var j = 0
-        for (byteInd in cipherBytes.indices){
-            i = ((i + 1) + byteSize) % byteSize
-            j = ((j + S[i]) + byteSize) % byteSize
-            val temp = S[i]
-            S[i] = S[j]
-            S[j] = temp
-            val K = S[((S[i] + S[j]) + byteSize) % byteSize]
-            cipherBytes[byteInd] = cipherBytes[byteInd] xor K
-        }
-        return cipherBytes;
+
+    override fun getKeyBits(): ByteArray {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     init {

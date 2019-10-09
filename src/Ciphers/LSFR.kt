@@ -5,14 +5,10 @@ import kotlin.experimental.*
 
 
 
-open class LSFR : StreamEncipher {
-    private var register: Register
+open class LSFR(registerState: String) : StreamEncipher {
+    private var register: Register = RegisterX29(registerState)
 
-    constructor(registerState: String){
-        register = RegisterX29(registerState)
-    }
-
-    override fun encode(plainBytes: ByteArray): ByteArray {
+    override fun code(plainBytes: ByteArray): ByteArray {
         val plainBits = parseByteArrayToBitArray(plainBytes)
         for (i in plainBits.indices){
             plainBits[i] = plainBits[i] xor register.nextBit()
@@ -20,11 +16,8 @@ open class LSFR : StreamEncipher {
         return parseBitArrayToByteArray(plainBits)
     }
 
-    override fun decode(cipherBytes: ByteArray): ByteArray {
-        val cipherBits = parseByteArrayToBitArray(cipherBytes)
-        for (i in cipherBits.indices){
-            cipherBits[i] = cipherBits[i] xor register.nextBit()
-        }
-        return parseBitArrayToByteArray(cipherBits)
+
+    override fun getKeyBits(): ByteArray {
+       return ByteArray(0)
     }
 }
