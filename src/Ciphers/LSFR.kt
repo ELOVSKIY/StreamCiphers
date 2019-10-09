@@ -1,24 +1,21 @@
 package Ciphers
 
+import Registers.*
 import kotlin.experimental.*
 
 
 
 open class LSFR : StreamEncipher {
-    private var decodeBits: ByteArray
-    private var encodeBits: ByteArray
+    private var register: Register
 
     constructor(registerState: String){
-        decodeBits = parseStringToBitArray(registerState)
-        encodeBits = parseStringToBitArray(registerState)
+        register = RegisterX29(registerState)
     }
 
     override fun encode(plainBytes: ByteArray): ByteArray {
         val plainBits = parseByteArrayToBitArray(plainBytes)
         for (i in plainBits.indices){
-            if (i % registerSize == 0 && i != 0)
-                updateRegister(encodeBits)
-            plainBits[i] = plainBits[i] xor encodeBits[i % registerSize]
+            plainBits[i] = plainBits[i] xor register.nextBit()
         }
         return parseBitArrayToByteArray(plainBits)
     }
@@ -26,9 +23,7 @@ open class LSFR : StreamEncipher {
     override fun decode(cipherBytes: ByteArray): ByteArray {
         val cipherBits = parseByteArrayToBitArray(cipherBytes)
         for (i in cipherBits.indices){
-            if (i % registerSize == 0 && i != 0)
-                updateRegister(decodeBits)
-            cipherBits[i] = cipherBits[i] xor decodeBits[i % registerSize]
+            cipherBits[i] = cipherBits[i] xor register.nextBit()
         }
         return parseBitArrayToByteArray(cipherBits)
     }

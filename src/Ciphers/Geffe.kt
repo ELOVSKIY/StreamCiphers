@@ -25,13 +25,13 @@ open class Geffe: StreamEncipher {
     }
 
     override fun encode(plainBytes: ByteArray): ByteArray {
-        val cipherBits = parseByteArrayToBitArray(plainBytes)
-        for (i in cipherBits.indices){
-            cipherBits[i] = cipherBits[i] xor
+        val plainBits = parseByteArrayToBitArray(plainBytes)
+        for (i in plainBits.indices){
+            plainBits[i] = plainBits[i] xor
                     (if (register3.nextBit() == 0.toByte())
                         register1.nextBit() else register2.nextBit())
         }
-        return parseBitArrayToByteArray(cipherBits)
+        return parseBitArrayToByteArray(plainBits)
     }
 
     fun getExample(): String{
