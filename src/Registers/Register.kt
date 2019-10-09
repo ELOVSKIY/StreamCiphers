@@ -7,7 +7,7 @@ abstract class Register(registerState: String) {
     abstract val xorBit: Int
     abstract val regSize: Int
     abstract var regPos: Int;
-    abstract var register: ByteArray
+    var register: ByteArray
 
     init {
         register = parseStringToBitArray(registerState)
