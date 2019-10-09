@@ -92,13 +92,13 @@ public class Controller {
     private boolean setCipher() {
         if (cipherType.getValue() != null) {
             if (cipherType.getValue().equals("LFSR")) {
-                if (checkField(field1)) {
+                if (checkField(field1, 29)) {
                     cipher = new LSFR(field1.getText());
                     return true;
                 }
             }
             if (cipherType.getValue().equals("Geffe")) {
-                if (checkField(field1) && checkField(field2) && checkField(field3)) {
+                if (checkField(field1, 29) && checkField(field2, 23) && checkField(field3, 28)) {
                     cipher = new Geffe(field1.getText(), field2.getText(), field3.getText());
                     field4.setText(((Geffe) cipher).getExample());
                     return true;
@@ -123,9 +123,9 @@ public class Controller {
         return false;
     }
 
-    boolean checkField(TextField field) {
+    boolean checkField(TextField field, int length) {
         String register = field.getText();
-        if (register.length() != 29)
+        if (register.length() != length)
             return false;
         for (int i = 0; i < register.length(); i++) {
             if (register.charAt(i) != '1' && register.charAt(i) != '0')

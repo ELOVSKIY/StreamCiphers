@@ -9,14 +9,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<Pane fx:id="pane" maxHeight="670" maxWidth="670" minHeight="740" minWidth="740" prefHeight="672.0" prefWidth="738.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
     <children>
-        <TextField fx:id="field1" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="400.0" />
-        <TextField fx:id="field2" layoutX="14.0" layoutY="57.0" prefHeight="25.0" prefWidth="400.0" />
-        <TextField fx:id="field3" layoutX="14.0" layoutY="101.0" prefHeight="25.0" prefWidth="400.0" />
-        <TextField fx:id="field4" editable="false" layoutX="14.0" layoutY="147.0" prefHeight="25.0" prefWidth="400.0" />
-        <TextArea fx:id="plainArea" editable="false" layoutX="10.0" layoutY="296.0" prefHeight="340.0" prefWidth="320.0" />
-        <TextArea fx:id="cipherArea" editable="false" layoutX="358.0" layoutY="296.0" prefHeight="340.0" prefWidth="320.0" />
+        <TextField fx:id="field1" layoutX="14.0" layoutY="57.0" prefHeight="26.0" prefWidth="400.0" />
+        <TextField fx:id="field2" layoutX="13.0" layoutY="112.0" prefHeight="25.0" prefWidth="400.0" />
+        <TextField fx:id="field3" layoutX="14.0" layoutY="168.0" prefHeight="25.0" prefWidth="400.0" />
+        <TextField fx:id="field4" editable="false" layoutX="14.0" layoutY="233.0" prefHeight="25.0" prefWidth="400.0" />
+        <TextArea fx:id="plainArea" editable="false" layoutX="16.0" layoutY="318.0" prefHeight="340.0" prefWidth="320.0" />
+        <TextArea fx:id="cipherArea" editable="false" layoutX="404.0" layoutY="318.0" prefHeight="340.0" prefWidth="320.0" />
         <ComboBox fx:id="cipherType" layoutX="526.0" layoutY="26.0" prefWidth="150.0" promptText="Выбери">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -31,7 +31,11 @@
         <Button layoutX="526.0" layoutY="183.0" mnemonicParsing="false" onAction="#onDecipherClick" prefHeight="32.0" prefWidth="150.0" text="Расшифровать" />
         <Button layoutX="526.0" layoutY="67.0" mnemonicParsing="false" onAction="#choseFile" prefHeight="32.0" prefWidth="150.0" text="Выбрать файл" />
       <Text fx:id="filePathText" layoutX="526.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Text layoutX="14.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Исходные биты" />
-      <Text layoutX="365.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Зашифрованные биты" />
+      <Text layoutX="27.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Исходные биты" />
+      <Text layoutX="414.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Зашифрованные биты" />
+      <Text layoutX="19.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пример ключа" />
+      <Text layoutX="16.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ключ 3 (28 символов)" wrappingWidth="393.07601737976074" />
+      <Text layoutX="18.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ключ 2 (23 символов)" wrappingWidth="400.0" />
+      <Text layoutX="20.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ключ 1 (29 символов для Geffe и LFSR)" />
     </children>
 </Pane>
